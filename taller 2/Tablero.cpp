@@ -89,3 +89,6 @@ void Tablero :: cambiarTurno() {
 char Tablero :: jugadorActual() const {
     return turnoJugador ? 'X' : 'O';   //esto para que se entienda es para el bool, sigue el siguiente formato: condicion? (si es true, toma este valor) : (false, toma este)
 }                                      //es una forma resumida en vez de hacer varios if
+
+Tablero :: ~Tablero(){
+}
