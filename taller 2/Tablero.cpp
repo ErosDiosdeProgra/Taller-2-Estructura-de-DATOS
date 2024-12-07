@@ -4,9 +4,9 @@
 #include <cstdlib>
 using namespace std;
 
-Tablero :: Tablero(){
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
+Tablero :: Tablero(){               // esto era para elegir al azar el jugador, creo que escuche al profe decir eso
+    for(int i = 0; i < 3; i++){   //supongo que tmb se debe aplicar al minimax ???
+        for(int j = 0; j < 3; j++){ 
             tablero[i][j] = '_';
         }
     }
