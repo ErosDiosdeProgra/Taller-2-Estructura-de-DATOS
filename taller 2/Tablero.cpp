@@ -17,21 +17,25 @@ Tablero :: Tablero(){               // esto era para elegir al azar el jugador, 
 
 void Tablero :: mostrarTablero() const{
     cout << "Reglas del juego - las posiciones van del 1 al 9 de izquierda a derecha para elegir donde marcar: " << endl;
+    cout << " " << endl;
     cout << "1 | 2 | 3 " << endl;
     cout << "_ | _ | _ " << endl;
     cout << "4 | 5 | 6 " << endl;
     cout << "_ | _ | _ " << endl;
     cout << "7 | 8 | 9 " << endl;
     cout << "  |   |   " << endl;
+    cout << "          " << endl;
+    cout << "          " << endl;
 
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             cout << " " << tablero[i][j];
             if (j < 2) cout << " |";
         }
-        if (i < 2) cout << "\n---+---+---\n";
+        if (i < 2) cout << "\n---|---|---\n";
     }
     cout << "\n";
+    cout << " " << endl;
 }
 
 bool Tablero :: marcarPosicion(int posicion) {
