@@ -1,79 +1,91 @@
+#include "Tablero.h"
 #include <iostream>
-#include "Tablero.h"    //esta es una version ultra sencilla, luego lo modificare para dejarlo mas bonito
-#include <cstdlib>      //y mas ordenado y con sus reglas, esta solo fue una prueba pa ver si va bien el "GATO"
-                        // voy a cambiar todo despues para colocar las fucniones del Tablero.h aqui
+#include <ctime>
+#include <cstdlib>
 using namespace std;
 
-bool turnoDeX = false;
-char tablero[3][3] = { {'_','_','_'},
-					   {'_','_','_'},
-					   {'_','_','_'}
-};
+Tablero :: Tablero(){
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            tablero[i][j] = '_';
+        }
+    }
 
-char hayGanador(){
-	//Validacion horizontal
-	for(int i = 0 ; i < 3 ; i++){
-		if(tablero[i][0] != '_' && tablero[i][0] == tablero[i][1] && tablero[i][1] == tablero[i][2] ){
-			return tablero[i][0];
-
-		}
-	}
-	//Validacion vertical
-	for(int i = 0 ; i < 3 ; i++){
-		if(tablero[0][i] != '_' && tablero[0][i] == tablero[1][i] && tablero[1][i] == tablero[2][i] ){
-			return tablero[0][i];
-
-		}
-	}
-
-	//Validacion Diagonal de izquierda a derecha
-	if(tablero[0][0] != '_' && tablero[0][0] == tablero[1][1] && tablero[1][1] == tablero[2][2] ){
-		return tablero[0][0];
-
-	}
-
-	//Validacion Diagonal de Derecha a Izquierda
-	if(tablero[0][2] != '_' && tablero[0][2] == tablero[1][1] && tablero[1][1] == tablero[2][0] ){
-		return tablero[0][2];
-	}
+    srand(static_cast<unsigned>(time(0)));
+    turnoJugador = rand() % 2 == 0;
 }
 
-bool hayEmpate(){
-	for(int i = 0 ; i < 3 ; i++){
-		for(int j = 0 ; j < 3 ; j++){
-			if(tablero[i][j] == '_'){
-				return false;
-			}
-		}
-	}
-	return true;
+void Tablero :: mostrarTablero() const{
+    cout << "Reglas del juego - las posiciones van del 1 al 9 de izquierda a derecha para elegir donde marcar: " << endl;
+    cout << "1 | 2 | 3 " << endl;
+    cout << "_ | _ | _ " << endl;
+    cout << "4 | 5 | 6 " << endl;
+    cout << "_ | _ | _ " << endl;
+    cout << "7 | 8 | 9 " << endl;
+    cout << "  |   |   " << endl;
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << " " << tablero[i][j];
+            if (j < 2) cout << " |";
+        }
+        if (i < 2) cout << "\n---+---+---\n";
+    }
+    cout << "\n";
 }
 
-void mostrarTablero(){
-	char jugador = turnoDeX ? 'X' : 'O';   //esta es la forma para ahorrar lineas
-	int fila = 0;
-	int columna = 0;
-	for(int i = 0 ; i < 3 ; i++){
-		for(int j = 0 ; j < 3 ; j++){
-			cout << tablero[i][j] << "\t";
-		}
-		cout << endl;
-	}
-	cout << "Es el turno de " << jugador << endl;
-	cout << "En que fila desea jugar: ";
-	cin >> fila;
-	cout << "En que columna desea jugar: ";
-	cin >> columna;
-	tablero[fila][columna] = jugador;
-	char ganador  = hayGanador();
-	if( ganador != '_'){
-		cout << " Ha ganado " << ganador << endl;
-		exit(0);
-	}
-	if(hayEmpate()){
-		cout << " Hay un empate" << endl;
-		exit(0);
-	}
-	turnoDeX = !turnoDeX;
+bool Tablero :: marcarPosicion(int posicion) {
+    if (posicion < 1 || posicion > 9) return false; // Posición inválida
 
+    // Convertir posición (1-9) a coordenadas de la matriz (ya que desde el punto de vista del usuario, seria mas intuitivo que por fila y columna)
+    // el -1 tomando que 0 es el inicio
+    int fila = (posicion - 1) / 3;
+    int columna = (posicion - 1) % 3;
+
+    if (tablero[fila][columna] != '_') return false; // Espacio ocupado
+
+    // Marcar la casilla con el símbolo del jugador actual
+    tablero[fila][columna] = turnoJugador ? 'X' : 'O';  //esto para que se entienda es para el bool, sigue el siguiente formato: condicion? (true) : (false)
+    return true;
 }
+
+char Tablero :: hayGanador() const {
+    // Validación horizontal
+    for (int i = 0; i < 3; i++) {
+        if (tablero[i][0] != '_' && tablero[i][0] == tablero[i][1] && tablero[i][1] == tablero[i][2]) {
+            return tablero[i][0];
+        }
+    }
+    // Validación vertical
+    for (int i = 0; i < 3; i++) {
+        if (tablero[0][i] != '_' && tablero[0][i] == tablero[1][i] && tablero[1][i] == tablero[2][i]) {
+            return tablero[0][i];
+        }
+    }
+    // Validación diagonal (izquierda a derecha)
+    if (tablero[0][0] != '_' && tablero[0][0] == tablero[1][1] && tablero[1][1] == tablero[2][2]) {
+        return tablero[0][0];
+    }
+    // Validación diagonal (derecha a izquierda)
+    if (tablero[0][2] != '_' && tablero[0][2] == tablero[1][1] && tablero[1][1] == tablero[2][0]) {
+        return tablero[0][2];
+    }
+    return '_'; // No hay ganador aún
+}
+
+bool Tablero :: hayEmpate() const {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (tablero[i][j] == '_') return false; // Hay espacios vacíos, por lo que continua, sino es true, por lo tanto empate
+        }
+    }
+    return true; 
+}
+
+void Tablero :: cambiarTurno() {
+    turnoJugador = !turnoJugador;
+}
+
+char Tablero :: jugadorActual() const {
+    return turnoJugador ? 'X' : 'O';   //esto para que se entienda es para el bool, sigue el siguiente formato: condicion? (si es true, toma este valor) : (false, toma este)
+}                                      //es una forma resumida en vez de hacer varios if
