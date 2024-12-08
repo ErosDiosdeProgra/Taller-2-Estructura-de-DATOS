@@ -1,7 +1,7 @@
 Alumnos:
 Branco Abalos | 21.619.393-8 | C1 | branco.abalos@alumnos.ucn.cl
-Eros Cortes | | C1 | eros.cortes@alumnos.ucn.cl 
-Joaquin Vega | | C2 | joaquin.vega02@alumnos.ucn.cl 
+Eros Cortes | 19.949.826-6 | C1 | eros.cortes@alumnos.ucn.cl 
+Joaquin Vega | 21.638.105-K | C2 | joaquin.vega02@alumnos.ucn.cl 
 
 Comando usado en terminal/consola para que funcione:
 g++ -g main.cpp Tablero.cpp -o main
@@ -23,6 +23,8 @@ los niveles superiores a este elegirán el valor numérico adecuado de cada nodo
 Con tan solo un tablero de 3x3 los árboles generados son enormes, teniendo la fórmula de (N-1)! opciones posibles de forma generalizada en juegos del estilo “Gato” o “Connect 4”, con N siendo el tamaño del tablero 
 (cantidad de casillas), por lo que se recurre a la Poda Alfa Beta para reducir la cantidad de casos
 
+La complejidad del Minimax es de un O(r^p), con "r" siendo el factor de ramificacion y "p" siendo la profundidad máxima del arbol
+
 
 Poda Alfa Beta:
 
@@ -35,3 +37,5 @@ los árboles de izquierda a derecha, de abajo hacia arriba.
 
 Si en alguna iteración ocurriera que Alfa es mayor o igual que Beta, significa que el nodo actual no podrá mejorar el valor ya encontrado, por lo que se podaran nodos a la derecha (provenientes del mismo padre) del valor 
 que causó esta interacción. Si se poda en un nodo Max se llamará poda Alfa mientras que si se poda en un nodo Min se llamará poda Beta.
+
+La complejidad del Minimax con poda Alfa Beta es de O(r^(p/2)), con "r" siendo el factor de ramificacion y "p" siendo la profundidad máxima del arbol
