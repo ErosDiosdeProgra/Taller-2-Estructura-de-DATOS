@@ -106,7 +106,7 @@ int Tablero::evaluar() const {
 }
 
 int Tablero::minimax(bool esMaximizador, int alpha, int beta) {
-    int puntaje = evaluar();  // Evaluamos el estado actual del tablero
+    int puntaje = evaluar();  // Evaluamos el estado actual del tablero                                      
     if (puntaje == 10 || puntaje == -10) {
         return puntaje; // Si hay un ganador, devolvemos el puntaje
     }
@@ -114,7 +114,7 @@ int Tablero::minimax(bool esMaximizador, int alpha, int beta) {
         return 0;  // Si es empate, devolvemos 0
     }
 
-    if (esMaximizador) {
+    if (esMaximizador) {     //IA jugando (circulo)
         int mejor = -1000;
         // Recorrer todo el tablero
         for (int i = 0; i < 3; i++) {
@@ -157,6 +157,18 @@ int Tablero::mejorMovimiento() {
     int mejorValor = -1000;
     int mejorMovimiento = -1;
 
+    for(int i = 0; i<3; i++) {
+        for(int j = 0; j<3; j++) {
+            if (tablero[i][j] == '_') {
+                tablero[i][j] = 'X'; // Probar si el jugador 1 (X) puede ganar aquí
+                if (hayGanador() == 'X') {
+                    tablero[i][j] = 'O'; // Bloquear al jugador 1 (X)
+                    return i * 3 + j + 1; // Convertir coordenadas a posición 1-9
+                }
+                tablero[i][j] = '_'; // Deshacer movimiento
+            }
+        }
+    }
     // Recorrer todo el tablero
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-#include "Tablero.cpp"
+#include "Tablero.h"
 using namespace std;
 
 void jugar() {
