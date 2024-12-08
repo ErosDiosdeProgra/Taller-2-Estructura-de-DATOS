@@ -14,5 +14,8 @@ class Tablero {
         bool hayEmpate() const;
         void cambiarTurno();
         char jugadorActual() const;
+        int evaluar() const;
+        int minimax(bool esMaximizador, int alpha, int beta);
+        int mejorMovimiento();
         ~Tablero();
 };

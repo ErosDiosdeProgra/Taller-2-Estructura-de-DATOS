@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-#include "Tablero.h"
+#include "Tablero.cpp"
 using namespace std;
 
 void jugar() {
@@ -58,7 +58,7 @@ int mostrarMenu(){
     return op;
 }
 
-int main() {   //hay que hacer el menu (eleccion de 2 jugadores, y la version jugador contra maquina), ya esta hecha la version 2 jugadores
+int main() {
     bool menu = true;
     while(menu){
         int opcion = mostrarMenu();
@@ -66,12 +66,50 @@ int main() {   //hay que hacer el menu (eleccion de 2 jugadores, y la version ju
         case 1:
             jugar();
             break;
-        
-        case 2:
+
+        case 2: {
+            Tablero tablero;  // Declarado dentro del bloque
+            int posicion;
+
             cout << " " << endl;
-            cout << "Seleccionaste jugar contra la maquina" << endl;  //aqui iria la funcion contra la IA
-            cout << " " << endl;
+            cout << "Seleccionaste jugar contra la maquina" << endl;
+            tablero.mostrarTablero();
+
+            while (true) {
+                if (tablero.jugadorActual() == 'X') {
+                    cout << "Turno del jugador. Ingresa una posición (1-9): ";
+                    cin >> posicion;
+                    if (!tablero.marcarPosicion(posicion)) {
+                        cout << "Movimiento no válido. Intenta de nuevo." << endl;
+                        continue;
+                    }
+                }
+
+                tablero.cambiarTurno();
+
+                if (tablero.jugadorActual() == 'O') {
+                    cout << "Turno de la máquina..." << endl;
+                    posicion = tablero.mejorMovimiento();
+                    tablero.marcarPosicion(posicion);
+                    cout << "La máquina marcó la posición " << posicion << "." << endl;
+                }
+
+                tablero.mostrarTablero();
+
+                // Verificar si hay ganador o empate después de cada movimiento
+                char ganador = tablero.hayGanador();
+                if (ganador != '_') {  // Si hay un ganador
+                    cout << "¡El jugador " << ganador << " ha ganado!" << endl;
+                    break;
+                }
+
+                if (tablero.hayEmpate()) {  // Si hay empate
+                    cout << "¡Es un empate!" << endl;
+                    break;
+                }
+            }
             break;
+        }
 
         case 3:
             cout << " " << endl;
@@ -79,6 +117,7 @@ int main() {   //hay que hacer el menu (eleccion de 2 jugadores, y la version ju
             cout << "Saliendo ...." << endl;
             menu = false;
             break;
+
         default:
             cout << "Seleccion invalida. Por favor ingrese de nuevo una opcion" << endl;
             break;

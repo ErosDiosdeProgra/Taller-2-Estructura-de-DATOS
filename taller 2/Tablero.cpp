@@ -15,6 +15,7 @@ Tablero :: Tablero(){               // esto era para elegir al azar el jugador, 
     turnoJugador = rand() % 2 == 0;
 }
 
+
 void Tablero :: mostrarTablero() const{
     cout << "Reglas del juego - las posiciones van del 1 al 9 de izquierda a derecha para elegir donde marcar: " << endl;
     cout << " " << endl;
@@ -96,3 +97,81 @@ char Tablero :: jugadorActual() const {
 
 Tablero :: ~Tablero(){
 }
+
+int Tablero::evaluar() const {
+    char ganador = hayGanador();
+    if (ganador == 'X') return -10; // IA pierde
+    if (ganador == 'O') return 10;  // IA gana
+    return 0; // Empate o no hay ganador
+}
+
+int Tablero::minimax(bool esMaximizador, int alpha, int beta) {
+    int puntaje = evaluar();  // Evaluamos el estado actual del tablero
+    if (puntaje == 10 || puntaje == -10) {
+        return puntaje; // Si hay un ganador, devolvemos el puntaje
+    }
+    if (hayEmpate()) {
+        return 0;  // Si es empate, devolvemos 0
+    }
+
+    if (esMaximizador) {
+        int mejor = -1000;
+        // Recorrer todo el tablero
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (tablero[i][j] == '_') {
+                    tablero[i][j] = 'O'; // IA juega
+                    int valor = minimax(false, alpha, beta);  // Llamada recursiva para el jugador
+                    tablero[i][j] = '_'; // Deshacer movimiento
+                    mejor = max(mejor, valor);  // Maximizar el puntaje
+                    alpha = max(alpha, mejor);  // Actualizar alpha
+                    if (beta <= alpha) {
+                        break; // Si la poda se activa, salimos del bucle
+                    }
+                }
+            }
+        }
+        return mejor;
+    } else {
+        int mejor = 1000;
+        // Recorrer todo el tablero
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (tablero[i][j] == '_') {
+                    tablero[i][j] = 'X'; // El jugador juega
+                    int valor = minimax(true, alpha, beta);  // Llamada recursiva para la IA
+                    tablero[i][j] = '_'; // Deshacer movimiento
+                    mejor = min(mejor, valor);  // Minimizar el puntaje
+                    beta = min(beta, mejor);  // Actualizar beta
+                    if (beta <= alpha) {
+                        break; // Si la poda se activa, salimos del bucle
+                    }
+                }
+            }
+        }
+        return mejor;
+    }
+}
+
+int Tablero::mejorMovimiento() {
+    int mejorValor = -1000;
+    int mejorMovimiento = -1;
+
+    // Recorrer todo el tablero
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (tablero[i][j] == '_') {
+                tablero[i][j] = 'O'; // La IA juega
+                int valorMovimiento = minimax(true, -1000, 1000);  // Llamada a minimax con poda alfa-beta
+                tablero[i][j] = '_'; // Deshacer movimiento
+
+                if (valorMovimiento > mejorValor) {
+                    mejorValor = valorMovimiento;
+                    mejorMovimiento = i * 3 + j + 1; // Convertir coordenadas a posición 1-9
+                }
+            }
+        }
+    }
+    return mejorMovimiento;
+}
+
