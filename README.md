@@ -6,7 +6,7 @@ Joaquin Vega | 21.638.105-K | C2 | joaquin.vega02@alumnos.ucn.cl
 Comando usado en terminal/consola para que funcione:
 g++ -g main.cpp Tablero.cpp -o main
 
-Documentacion
+Documentacion (El diagrama de un arbol simple se encuentra como png en este repositorio)
 
 Explicación teórica del Minimax:
 
