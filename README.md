@@ -6,7 +6,7 @@ Joaquin Vega | 21.638.105-K | C2 | joaquin.vega02@alumnos.ucn.cl
 Comando usado en terminal/consola para que funcione:
 g++ -g main.cpp Tablero.cpp -o main
 
-Documentacion (El diagrama de un arbol simple se encuentra como png en este repositorio)
+Documentacion
 
 Explicación teórica del Minimax:
 
@@ -19,6 +19,8 @@ juegos como “Gato”, el “Connect 4” o el “ajedrez” entran en esta cat
 De forma gráfica, se deberán plantear todos los casos posibles desde donde nos encontremos hasta el final del juego, en el que se le darán valores por el desempeño logrado mediante la función de evaluación 
 (un 1 contará como mejor decision/victoria para max, un -1 contará como mejor decision/victoria para min y el 0 indica un empate entre ambos). Al tener todas las casillas rellenadas en el nivel más abajo del árbol,
 los niveles superiores a este elegirán el valor numérico adecuado de cada nodo terminal para el jugador que deba tomar la decisión de ese nivel del arbol (el valor positivo para max o el valor negativo para min).
+
+![MiniMax](https://github.com/user-attachments/assets/0660c87b-034b-4c9b-8f17-5c38b5f64cbf)
 
 Con tan solo un tablero de 3x3 los árboles generados son enormes, teniendo la fórmula de (N-1)! opciones posibles de forma generalizada en juegos del estilo “Gato” o “Connect 4”, con N siendo el tamaño del tablero 
 (cantidad de casillas), por lo que se recurre a la Poda Alfa Beta para reducir la cantidad de casos
@@ -39,4 +41,3 @@ Si en alguna iteración ocurriera que Alfa es mayor o igual que Beta, significa 
 que causó esta interacción. Si se poda en un nodo Max se llamará poda Alfa mientras que si se poda en un nodo Min se llamará poda Beta.
 
 La complejidad del Minimax con poda Alfa Beta es de O(r^(p/2)), con "r" siendo el factor de ramificacion y "p" siendo la profundidad máxima del arbol
-![MiniMax](https://github.com/user-attachments/assets/0660c87b-034b-4c9b-8f17-5c38b5f64cbf)
