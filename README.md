@@ -39,3 +39,4 @@ Si en alguna iteración ocurriera que Alfa es mayor o igual que Beta, significa 
 que causó esta interacción. Si se poda en un nodo Max se llamará poda Alfa mientras que si se poda en un nodo Min se llamará poda Beta.
 
 La complejidad del Minimax con poda Alfa Beta es de O(r^(p/2)), con "r" siendo el factor de ramificacion y "p" siendo la profundidad máxima del arbol
+![MiniMax](https://github.com/user-attachments/assets/0660c87b-034b-4c9b-8f17-5c38b5f64cbf)
