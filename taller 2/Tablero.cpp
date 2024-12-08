@@ -4,18 +4,21 @@
 #include <cstdlib>
 using namespace std;
 
-Tablero :: Tablero(){               // esto era para elegir al azar el jugador, creo que escuche al profe decir eso
-    for(int i = 0; i < 3; i++){   //supongo que tmb se debe aplicar al minimax ???
+/*Aqui en el constructor se rellena el tablero y de decide aleatoriamente 
+cual de los jugadores comienza la partida*/
+Tablero :: Tablero(){               
+    for(int i = 0; i < 3; i++){   
         for(int j = 0; j < 3; j++){ 
             tablero[i][j] = '_';
         }
     }
 
-    srand(static_cast<unsigned>(time(0)));
-    turnoJugador = rand() % 2 == 0;
+    srand(static_cast<unsigned>(time(0)));   // esto era para elegir al azar el jugador, creo que escuche al profe decir eso
+    turnoJugador = rand() % 2 == 0;          //supongo que tmb se debe aplicar al minimax ???
 }
 
-
+/*esta funcion imprime por pantalla las reglas del juego (posiciones elegibles) y tambien va mostrando
+por turno como va cambiando el tablero cada que se llama a esta funcion*/
 void Tablero :: mostrarTablero() const{
     cout << "Reglas del juego - las posiciones van del 1 al 9 de izquierda a derecha para elegir donde marcar: " << endl;
     cout << " " << endl;
@@ -39,6 +42,9 @@ void Tablero :: mostrarTablero() const{
     cout << " " << endl;
 }
 
+/*En esta funcion se hace un cambio de posicion (1 al 9) a coordenadas de matriz para marcar la posicion
+correspondiente. En caso de estar ocupado la posicion retorna falso (no se podra marcar) y si no esta ocupado
+entonces marca la posicion seleccionada*/
 bool Tablero :: marcarPosicion(int posicion) {
     if (posicion < 1 || posicion > 9) return false; // Posición inválida
 
@@ -54,6 +60,8 @@ bool Tablero :: marcarPosicion(int posicion) {
     return true;
 }
 
+/*Esta funcion verifica por filas, columnas y diagonales si es que existe un ganador (ya sea jugador X o jugador O)
+si no hay ganador retorna "_" lo que significa que debe seguir el juego ejecutandose*/
 char Tablero :: hayGanador() const {
     // Validación horizontal
     for (int i = 0; i < 3; i++) {
@@ -78,6 +86,9 @@ char Tablero :: hayGanador() const {
     return '_'; // No hay ganador aún
 }
 
+/*Esta funcion va a comprobar si es que existe un empate en la partida (ningun jugador gana) para eso va a 
+recorrer la matriz y verificar si esta completada, ya que si retorna '_' significa que aun no
+se acaba la partida por lo que no puede haber empate*/
 bool Tablero :: hayEmpate() const {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -87,17 +98,21 @@ bool Tablero :: hayEmpate() const {
     return true; 
 }
 
+/*Esta funcion es para que luego de finalizado un turno, se cambie al otro jugador (ya que se van intercambiando)*/
 void Tablero :: cambiarTurno() {
     turnoJugador = !turnoJugador;
 }
 
+/*Esta funcion retorna al jugador actual en aquel turno, el cual es utilizado luego en otras funciones*/
 char Tablero :: jugadorActual() const {
     return turnoJugador ? 'X' : 'O';   //esto para que se entienda es para el bool, sigue el siguiente formato: condicion? (si es true, toma este valor) : (false, toma este)
 }                                      //es una forma resumida en vez de hacer varios if
 
+/*Este es el destructor del objeto tablero*/
 Tablero :: ~Tablero(){
 }
 
+/*En esta funcion se evalua a la IA, donde dependiendo del retorno, se señala que gana o pierde la IA*/
 int Tablero::evaluar() const {
     char ganador = hayGanador();
     if (ganador == 'X') return -10; // IA pierde
@@ -105,6 +120,7 @@ int Tablero::evaluar() const {
     return 0; // Empate o no hay ganador
 }
 
+/*En esta funcion se aplica el algoritmo minimax junto con la poda*/
 int Tablero::minimax(bool esMaximizador, int alpha, int beta) {
     int puntaje = evaluar();  // Evaluamos el estado actual del tablero                                      
     if (puntaje == 10 || puntaje == -10) {
@@ -153,6 +169,8 @@ int Tablero::minimax(bool esMaximizador, int alpha, int beta) {
     }
 }
 
+/*Esta funcion es donde la IA va a decidir cual es el mejor movimiento para elegir, y luego 
+de analizarlo, retorna el mejor movimiento que el cree*/
 int Tablero::mejorMovimiento() {
     int mejorValor = -1000;
     int mejorMovimiento = -1;

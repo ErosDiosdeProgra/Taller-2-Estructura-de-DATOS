@@ -4,6 +4,8 @@
 #include "Tablero.h"
 using namespace std;
 
+/**Esta funcion activa lo que seria el modo de 2 jugadores reales
+y además elige al azar cual de los 2 jugadores ("X" o "O" empieza) */
 void jugar() {
     Tablero tablero;
     int posicion;
@@ -40,6 +42,8 @@ void jugar() {
     }
 }
 
+/*Esta funcion muestra el menu sobre el cual funciona el juego, aqui el jugador(es) puede
+seleccionar el modo de juego*/
 int mostrarMenu(){
     cout<<  "******Bienvenido al MENU principal del GATO******" << endl;
     cout<<  "Seleccione una de las siguientes opciones: " << endl;
@@ -58,6 +62,8 @@ int mostrarMenu(){
     return op;
 }
 
+/*En esta funcion se ejecuta la version de jugador contra maquina, aqui la maquina
+utiliza el algoritmo minimax para poder vencer al jugador*/
 void jugarContraMaquina(){
     Tablero tablero;  // Declarado dentro del bloque
         int posicion;
