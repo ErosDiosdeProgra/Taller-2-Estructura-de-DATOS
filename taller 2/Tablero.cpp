@@ -157,6 +157,19 @@ int Tablero::mejorMovimiento() {
     int mejorValor = -1000;
     int mejorMovimiento = -1;
 
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (tablero[i][j] == '_') {
+                tablero[i][j] = 'O'; // IA juega
+                if (hayGanador() == 'O') {
+                    tablero[i][j] = '_'; // Deshacer movimiento
+                    return i * 3 + j + 1; // Convertir coordenadas a posición 1-9
+                }
+                tablero[i][j] = '_'; // Deshacer movimiento
+            }
+        }
+    }
+
     for(int i = 0; i<3; i++) {
         for(int j = 0; j<3; j++) {
             if (tablero[i][j] == '_') {
