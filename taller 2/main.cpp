@@ -58,6 +58,49 @@ int mostrarMenu(){
     return op;
 }
 
+void jugarContraMaquina(){
+    Tablero tablero;  // Declarado dentro del bloque
+        int posicion;
+
+        cout << " " << endl;
+        cout << "Seleccionaste jugar contra la maquina" << endl;
+        tablero.mostrarTablero();
+
+        while (true) {
+            if (tablero.jugadorActual() == 'X') {
+                cout << "Turno del jugador. Ingresa una posición (1-9): ";
+                cin >> posicion;
+                if (!tablero.marcarPosicion(posicion)) {
+                    cout << "Movimiento no válido. Intenta de nuevo." << endl;
+                    continue;
+                }
+            }
+
+            tablero.cambiarTurno();
+
+            if (tablero.jugadorActual() == 'O') {
+                cout << "Turno de la máquina..." << endl;
+                posicion = tablero.mejorMovimiento();
+                tablero.marcarPosicion(posicion);
+                cout << "La máquina marcó la posición " << posicion << "." << endl;
+            }
+
+            tablero.mostrarTablero();
+
+            // Verificar si hay ganador o empate después de cada movimiento
+            char ganador = tablero.hayGanador();
+            if (ganador != '_') {  // Si hay un ganador
+                cout << "¡El jugador " << ganador << " ha ganado!" << endl;
+                break;
+            }
+
+            if (tablero.hayEmpate()) {  // Si hay empate
+                cout << "¡Es un empate!" << endl;
+                break;
+            }
+        }
+}
+
 int main() {
     bool menu = true;
     while(menu){
@@ -67,49 +110,9 @@ int main() {
             jugar();
             break;
 
-        case 2: {
-            Tablero tablero;  // Declarado dentro del bloque
-            int posicion;
-
-            cout << " " << endl;
-            cout << "Seleccionaste jugar contra la maquina" << endl;
-            tablero.mostrarTablero();
-
-            while (true) {
-                if (tablero.jugadorActual() == 'X') {
-                    cout << "Turno del jugador. Ingresa una posición (1-9): ";
-                    cin >> posicion;
-                    if (!tablero.marcarPosicion(posicion)) {
-                        cout << "Movimiento no válido. Intenta de nuevo." << endl;
-                        continue;
-                    }
-                }
-
-                tablero.cambiarTurno();
-
-                if (tablero.jugadorActual() == 'O') {
-                    cout << "Turno de la máquina..." << endl;
-                    posicion = tablero.mejorMovimiento();
-                    tablero.marcarPosicion(posicion);
-                    cout << "La máquina marcó la posición " << posicion << "." << endl;
-                }
-
-                tablero.mostrarTablero();
-
-                // Verificar si hay ganador o empate después de cada movimiento
-                char ganador = tablero.hayGanador();
-                if (ganador != '_') {  // Si hay un ganador
-                    cout << "¡El jugador " << ganador << " ha ganado!" << endl;
-                    break;
-                }
-
-                if (tablero.hayEmpate()) {  // Si hay empate
-                    cout << "¡Es un empate!" << endl;
-                    break;
-                }
-            }
+        case 2: 
+            jugarContraMaquina();
             break;
-        }
 
         case 3:
             cout << " " << endl;
