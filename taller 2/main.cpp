@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-#include "Tablero.h"
+#include "Tablero.cpp"
 using namespace std;
 
 /**Esta funcion activa lo que seria el modo de 2 jugadores reales
@@ -70,9 +70,10 @@ void jugarContraMaquina(){
 
         cout << " " << endl;
         cout << "Seleccionaste jugar contra la maquina" << endl;
-        tablero.mostrarTablero();
 
         while (true) {
+            tablero.mostrarTablero();
+
             if (tablero.jugadorActual() == 'X') {
                 cout << "Turno del jugador. Ingresa una posición (1-9): ";
                 cin >> posicion;
@@ -82,8 +83,6 @@ void jugarContraMaquina(){
                 }
             }
 
-            tablero.cambiarTurno();
-
             if (tablero.jugadorActual() == 'O') {
                 cout << "Turno de la máquina..." << endl;
                 posicion = tablero.mejorMovimiento();
@@ -91,16 +90,18 @@ void jugarContraMaquina(){
                 cout << "La máquina marcó la posición " << posicion << "." << endl;
             }
 
-            tablero.mostrarTablero();
+            tablero.cambiarTurno();
 
             // Verificar si hay ganador o empate después de cada movimiento
             char ganador = tablero.hayGanador();
             if (ganador != '_') {  // Si hay un ganador
+                tablero.mostrarTablero();
                 cout << "¡El jugador " << ganador << " ha ganado!" << endl;
                 break;
             }
 
             if (tablero.hayEmpate()) {  // Si hay empate
+                tablero.mostrarTablero();
                 cout << "¡Es un empate!" << endl;
                 break;
             }
