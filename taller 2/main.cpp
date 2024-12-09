@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-#include "Tablero.cpp"
+#include "Tablero.h"
 using namespace std;
 
 /**Esta funcion activa lo que seria el modo de 2 jugadores reales
