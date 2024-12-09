@@ -66,7 +66,7 @@ int mostrarMenu(){
         cin.clear(); // Entre el fail y el clear, se encargan de ver si falla la entrada (por pedir un int y que nos den otro tipo) y el clear "limpia" cin pa que no hayan errores
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); //se ignoran la mayor cantidad de numeros que se encuentren hasta un salto de linea (el enter u espacio)
         throw invalid_argument("Entrada invalida, ingrese un numero");
-    }
+    }  
     return op;
 }
 
@@ -94,6 +94,7 @@ void jugarContraMaquina(){
                     cin.ignore(numeric_limits<streamsize>::max(), '\n'); //se ignoran la mayor cantidad de numeros que se encuentren hasta un salto de linea (el enter u espacio)
                     throw invalid_argument("Entrada invalida, ingrese un numero");
                 }
+
                 if (!tablero.marcarPosicion(posicion)) {
                     cout << "Movimiento no válido. Intenta de nuevo." << endl;
                     continue;
