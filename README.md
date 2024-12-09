@@ -4,7 +4,9 @@ Eros Cortes | 19.949.826-6 | C1 | eros.cortes@alumnos.ucn.cl
 Joaquin Vega | 21.638.105-K | C2 | joaquin.vega02@alumnos.ucn.cl 
 
 Comando usado en terminal/consola para que funcione:
-g++ -g main.cpp Tablero.cpp -o main
+g++ -g main.cpp Tablero.cpp -o main 
+
+./main
 
 Documentacion
 

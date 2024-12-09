@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-#include "Tablero.cpp"
+#include "Tablero.h"
 using namespace std;
 
 /**Esta funcion activa lo que seria el modo de 2 jugadores reales
@@ -13,6 +13,10 @@ void jugar() {
     cout << " " << endl;
     cout << "Elegiste la opcion de Jugador1 (X) v/s Jugador2 (O)"<< endl;
     tablero.mostrarTablero();
+
+    if (tablero.jugadorActual() == 'O'){
+        tablero.cambiarTurno();
+    }
 
     while (true) {
         cout << "Turno del jugador " << tablero.jugadorActual() << ". Ingresa una posición (1-9): ";
@@ -74,6 +78,10 @@ void jugarContraMaquina(){
 
         cout << " " << endl;
         cout << "Seleccionaste jugar contra la maquina" << endl;
+
+        if (tablero.jugadorActual() == 'O'){
+            tablero.cambiarTurno();
+        }
 
         while (true) {
             tablero.mostrarTablero();
