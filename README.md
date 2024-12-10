@@ -5,7 +5,7 @@ Joaquin Vega | 21.638.105-K | C2 | joaquin.vega02@alumnos.ucn.cl
 
 Comando usado en terminal/consola para que funcione:
 
-cd "taller 2"
+(si es que no se encuentra por consola en "taller 2", usar cd "taller 2")
 
 g++ -g main.cpp Tablero.cpp -o main 
 
